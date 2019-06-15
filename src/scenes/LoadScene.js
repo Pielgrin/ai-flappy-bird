@@ -45,44 +45,43 @@ class LoadScene extends Phaser.Scene
 
         let birdRandom = Phaser.Math.Between(0, 2);
 
-        if(birdRandom == 0)
-        {
-            this.anims.create({
-                key: 'fly',
-                frames: [
-                    { key: 'blue-bird-downflap' },
-                    { key: 'blue-bird-midflap' },
-                    { key: 'blue-bird-upflap' },
-                ],
-                frameRate: 8,
-                repeat: -1
-            });
-        }
-        else if(birdRandom == 1)
-        {
-            this.anims.create({
-                key: 'fly',
-                frames: [
-                    { key: 'yellow-bird-downflap' },
-                    { key: 'yellow-bird-midflap' },
-                    { key: 'yellow-bird-upflap' },
-                ],
-                frameRate: 8,
-                repeat: -1
-            });
-        }
-        else 
-        {
-            this.anims.create({
-                key: 'fly',
-                frames: [
-                    { key: 'red-bird-downflap' },
-                    { key: 'red-bird-midflap' },
-                    { key: 'red-bird-upflap' },
-                ],
-                frameRate: 8,
-                repeat: -1
-            });
+        switch(birdRandom) {
+            case 0:
+                    this.anims.create({
+                        key: 'fly',
+                        frames: [
+                            { key: 'blue-bird-downflap' },
+                            { key: 'blue-bird-midflap' },
+                            { key: 'blue-bird-upflap' },
+                        ],
+                        frameRate: 8,
+                        repeat: -1
+                    });
+                    break;
+            case 1:
+                    this.anims.create({
+                        key: 'fly',
+                        frames: [
+                            { key: 'yellow-bird-downflap' },
+                            { key: 'yellow-bird-midflap' },
+                            { key: 'yellow-bird-upflap' },
+                        ],
+                        frameRate: 8,
+                        repeat: -1
+                    });
+                    break;
+            default:
+                    this.anims.create({
+                        key: 'fly',
+                        frames: [
+                            { key: 'red-bird-downflap' },
+                            { key: 'red-bird-midflap' },
+                            { key: 'red-bird-upflap' },
+                        ],
+                        frameRate: 8,
+                        repeat: -1
+                    });
+                    break;
         }
     }
 
