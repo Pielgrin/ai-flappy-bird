@@ -12,7 +12,7 @@ class GameScene extends Phaser.Scene
             textObject: this.add.bitmapText(this.game.config.width/2, 20, 'font', '0', 40)
         };
         this.score.textObject.setDepth(4);
-        this.gameStarted = false;
+        this.gameStarted = true;
         this.finishedGame = false;
 
         let bgRandom = Phaser.Math.Between(0, 1);
@@ -40,7 +40,7 @@ class GameScene extends Phaser.Scene
         this.bird = this.physics.add.sprite(75, 300).play('fly');
         this.bird.body.height = 24;
         this.bird.setOrigin(0.5, 0.7);
-        this.bird.body.allowGravity = false;
+       // this.bird.body.allowGravity = false;
         this.bird.body.setCollideWorldBounds(true);
         this.bird.setDepth(2);
         this.physics.add.collider(this.base, this.bird, this.gameOver, null, this);
@@ -52,11 +52,12 @@ class GameScene extends Phaser.Scene
         this.zonesScore = this.physics.add.group();
         this.physics.add.overlap(this.bird, this.zonesScore, this.incrementScore, null, this);
 
-        this.intro = this.add.image(this.game.config.width/2, this.game.config.height/2, 'intro');
-        this.intro.setDepth(4);
+        /*this.intro = this.add.image(this.game.config.width/2, this.game.config.height/2, 'intro');
+        this.intro.setDepth(4);*/
 
         this.bg.on('pointerdown', () => {
-            this.gameStarted ? this.jump() : this.startGame();
+            //this.gameStarted ? this.jump() : this.startGame();
+            this.jump();
         });
 
         this.time.addEvent ({ delay: 1500, callback: this.addOnePipe, callbackScope: this, loop: true });
@@ -71,7 +72,7 @@ class GameScene extends Phaser.Scene
             this.base.tilePositionX += 2.5;          
         }
         
-        if(!this.finishedGame && this.gameStarted)
+        if(!this.finishedGame)
         {   
             this.pipes.getChildren().forEach((pipe) => {
                 pipe.x -= 2.5;
@@ -81,7 +82,7 @@ class GameScene extends Phaser.Scene
                 zoneScore.x -= 2.5;
             });
 
-            if(this.bird.angle < 20 && this.gameStarted)
+            if(this.bird.angle < 20)
             {
                 this.bird.angle += 1;
             }
@@ -90,7 +91,7 @@ class GameScene extends Phaser.Scene
 
     addOnePipe ()
     {
-        if(this.gameStarted && !this.finishedGame)
+        if(!this.finishedGame)
         {
             let gap = 120;
             let randomHeightTop = Phaser.Math.Between(50, 312);
@@ -118,7 +119,7 @@ class GameScene extends Phaser.Scene
 
     deletePipes ()
     {
-        if(this.gameStarted && !this.finishedGame)
+        if(!this.finishedGame)
         {
             this.pipes.getChildren().forEach((pipe) => {
                 if(pipe.x < -pipe.width)
@@ -145,22 +146,24 @@ class GameScene extends Phaser.Scene
         zoneScore.destroy();
     }
 
-    startGame ()
+   /* startGame ()
     {
         this.gameStarted = true;
         this.intro.visible = false;
         this.bird.body.allowGravity = true;
-    }
+    }*/
 
     gameOver ()
     {
         if(!this.finishedGame)
         {
             this.finishedGame = true;
-            this.score.textObject.visible = false;
+            //this.game.scene.restart('GameScene')
+            this.scene.restart();
+            /*this.score.textObject.visible = false;
             this.bird.anims.pause();
-            this.registry.set('score', this.score);
-            this.game.scene.start('GameOverScene');
+            this.registry.set('score', this.score);*/
+           // this.game.scene.start('GameOverScene');
         }    
     }
 }
